@@ -1,11 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 using Moq;
 using Moq.Protected;
+using Netension.Authorization.OAuth.Binders;
 using Netension.Authorization.OAuth.Clients;
 using System;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit.Abstractions;
@@ -16,6 +15,7 @@ namespace Netension.Authorization.Test.Clients
     {
         private readonly ILogger<OAuthClient> _logger;
         private Mock<HttpMessageHandler> _httpMessageHandlerMock;
+        private Mock<ITokenRequestBinder> _tokenRequestBinderMock;
         private readonly Uri BASE_ADRESS = new Uri("http://test-authority");
 
         public OAuthClient_Test(ITestOutputHelper outputHelper)
@@ -37,14 +37,14 @@ namespace Netension.Authorization.Test.Clients
                 BaseAddress = BASE_ADRESS
             };
 
-            return new OAuthClient(httpClient, _logger);
-        }
+            _tokenRequestBinderMock = new Mock<ITokenRequestBinder>();
 
-        
+            return new OAuthClient(httpClient, _tokenRequestBinderMock.Object, _logger);
+        }
     }
 
     public static class TestExtensions
     {
-        
+
     }
 }

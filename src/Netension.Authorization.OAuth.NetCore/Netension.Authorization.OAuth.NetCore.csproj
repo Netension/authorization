@@ -2,7 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <CodeAnalysisRuleSet>..\.sonarlint\netension_authorizationcsharp.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\.sonarlint\netension_authorization\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
@@ -11,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Netension.Authorization.OAuth\Netension.Authorization.OAuth.csproj" />
-    <ProjectReference Include="..\Netension.Authorization.OIDC\Netension.Authorization.OAuth.csproj" />
+    <ProjectReference Include="..\Netension.Authorization.OAuth\Netension.Authorization.OAuth.csproj" />
   </ItemGroup>
 
 </Project>

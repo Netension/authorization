@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
@@ -20,7 +19,7 @@ namespace Netension.Authorization.OAuth.NetCore.Sample
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Netension.Request.Sample", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Netension.Authorization.OAuth.NetCore.Sample", Version = "v1" });
             });
         }
 

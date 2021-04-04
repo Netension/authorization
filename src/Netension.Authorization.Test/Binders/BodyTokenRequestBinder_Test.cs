@@ -65,7 +65,7 @@ namespace Netension.Authorization.Test.Binders
             var result = sut.Bind(new Fixture().Create<Uri>(), request);
 
             // Assert
-            var content = new FormUrlEncodedContent(new Dictionary<string, string> 
+            var content = new FormUrlEncodedContent(new Dictionary<string, string>
             {
                 { "grant_type", request.GrantType },
                 { "client_id", request.ClientId },

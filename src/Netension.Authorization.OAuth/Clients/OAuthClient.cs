@@ -2,7 +2,6 @@
 using Netension.Authorization.OAuth.Binders;
 using Netension.Authorization.OAuth.ValueObjects;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading;
@@ -30,7 +29,7 @@ namespace Netension.Authorization.OAuth.Clients
 
         public async Task<TokenResponse> AuthorizeAsync(Uri tokenEndpoint, ClientCredentialsRequest request, CancellationToken cancellationToken)
         {
-            _logger.LogDebug("Authorize with {flow} flow", "Client Credentials");       
+            _logger.LogDebug("Authorize with {flow} flow", "Client Credentials");
 
             var response = await _httpClient.SendAsync(_tokenRequestBinder.Bind(tokenEndpoint, request), cancellationToken);
 
