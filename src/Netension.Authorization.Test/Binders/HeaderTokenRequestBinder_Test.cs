@@ -80,7 +80,7 @@ namespace Netension.Authorization.Test.Binders
             var result = sut.Bind(new Fixture().Create<Uri>(), request);
 
             // Assert
-            Assert.Equal(await new FormUrlEncodedContent(new Dictionary<string, string> { { "grant_type", request.GrantType }, { "scope", request.Scope } }).ReadAsByteArrayAsync(), await result.Content.ReadAsByteArrayAsync());
+            Assert.Equal(await new FormUrlEncodedContent(new Dictionary<string, string> { { "grant_type", request.GrantType }, { "scopes", request.Scopes } }).ReadAsByteArrayAsync(), await result.Content.ReadAsByteArrayAsync());
         }
     }
 }

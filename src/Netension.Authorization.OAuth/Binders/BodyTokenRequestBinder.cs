@@ -27,7 +27,7 @@ namespace Netension.Authorization.OAuth.Binders
                         { "client_secret", request.ClientSecret }
                     };
 
-            if (request.Scope.Any()) content.Add("scopes", request.Scope);
+            if (request.Scopes.Any()) content.Add("scopes", request.Scopes);
 
             return new HttpRequestMessage(HttpMethod.Post, tokenEndpoint)
             {

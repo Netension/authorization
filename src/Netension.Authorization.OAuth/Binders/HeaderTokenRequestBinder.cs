@@ -24,7 +24,7 @@ namespace Netension.Authorization.OAuth.Binders
             result.Headers.Authorization = new BasicAuthenticationHeaderValue(request.ClientId, request.ClientSecret);
 
             var content = new Dictionary<string, string> { { "grant_type", request.GrantType } };
-            if (request.Scope.Any()) content.Add("scopes", request.Scope);
+            if (request.Scopes.Any()) content.Add("scopes", request.Scopes);
 
             result.Content = new FormUrlEncodedContent(content);
 

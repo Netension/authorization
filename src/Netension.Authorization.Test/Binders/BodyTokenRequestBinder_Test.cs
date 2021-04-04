@@ -70,7 +70,7 @@ namespace Netension.Authorization.Test.Binders
                 { "grant_type", request.GrantType },
                 { "client_id", request.ClientId },
                 { "client_secret", request.ClientSecret },
-                { "scope", request.Scope }
+                { "scopes", request.Scopes }
             });
             Assert.Equal(await content.ReadAsByteArrayAsync(), await result.Content.ReadAsByteArrayAsync());
         }

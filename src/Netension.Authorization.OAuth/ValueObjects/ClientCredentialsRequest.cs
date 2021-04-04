@@ -11,18 +11,18 @@ namespace Netension.Authorization.OAuth.ValueObjects
 
         public string ClientSecret { get; }
 
-        public string Scope { get; }
+        public string Scopes { get; }
 
-        public ClientCredentialsRequest(string clientId, string clientSecret, string scope)
+        public ClientCredentialsRequest(string clientId, string clientSecret, string scopes)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
-            Scope = scope;
+            Scopes = scopes;
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            return new[] { GrantType, ClientId, ClientSecret, Scope };
+            return new[] { GrantType, ClientId, ClientSecret, Scopes };
         }
     }
 }
