@@ -9,6 +9,7 @@ using Netension.Authorization.OAuth.Binders;
 using Netension.Authorization.OAuth.Clients;
 using Netension.Authorization.OAuth.Hosting.LightInject.Builders;
 using Netension.Authorization.OAuth.Options;
+using Netension.Authorization.OAuth.Storages;
 using System;
 using System.Net.Http;
 
@@ -29,7 +30,7 @@ namespace Netension.Authorization.OAuth.Hosting.LightInject
             hostBuilder.ConfigureContainer<IServiceContainer>((context, container) =>
             {
                 container.RegisterTransient<IOAuthClient>(factory => new OAuthClient(factory.GetInstance<IHttpClientFactory>().CreateClient(scheme), factory.GetInstance<ITokenRequestBinder>(scheme), factory.GetInstance<ILogger<OAuthClient>>()), scheme);
-                container.RegisterSingleton<IAuthenticator>(factory => new ClientCredentialsAuthenticator(factory.GetInstance<IOptionsSnapshot<ClientCredentialsOptions>>().Get(scheme), factory.GetInstance<IOAuthClient>(scheme), factory.GetInstance<ILogger<ClientCredentialsAuthenticator>>()), scheme);
+                container.RegisterSingleton<IAuthenticator>(factory => new ClientCredentialsAuthenticator(factory.GetInstance<IOptionsSnapshot<ClientCredentialsOptions>>().Get(scheme), factory.GetInstance<IOAuthClient>(scheme), factory.GetInstance<ITokenStorage>(scheme), factory.GetInstance<ILogger<ClientCredentialsAuthenticator>>()), scheme);
             });
 
             build(new ClientCredentialsBuilder(hostBuilder, scheme));

@@ -7,6 +7,6 @@ namespace Netension.Authorization.OAuth.Clients
 {
     public interface IOAuthClient
     {
-        Task<TokenResponse> AuthorizeAsync(Uri tokenEndpoint, ClientCredentialsRequest request, CancellationToken cancellationToken);
+        Task<TokenResponse> CallTokenEndpointAsync(Uri tokenEndpoint, ClientCredentialsRequest request, CancellationToken cancellationToken);
     }
 }

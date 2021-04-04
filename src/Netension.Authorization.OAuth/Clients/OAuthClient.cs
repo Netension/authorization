@@ -27,10 +27,9 @@ namespace Netension.Authorization.OAuth.Clients
             _logger = logger;
         }
 
-        public async Task<TokenResponse> AuthorizeAsync(Uri tokenEndpoint, ClientCredentialsRequest request, CancellationToken cancellationToken)
+        public async Task<TokenResponse> CallTokenEndpointAsync(Uri tokenEndpoint, ClientCredentialsRequest request, CancellationToken cancellationToken)
         {
-            _logger.LogDebug("Authorize with {flow} flow", "Client Credentials");
-
+            _logger.LogDebug("Get token from {endpoint}", tokenEndpoint);
             var response = await _httpClient.SendAsync(_tokenRequestBinder.Bind(tokenEndpoint, request), cancellationToken);
 
             return await response.Content.ReadFromJsonAsync<TokenResponse>(cancellationToken: cancellationToken);

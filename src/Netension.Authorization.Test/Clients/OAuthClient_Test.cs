@@ -55,7 +55,7 @@ namespace Netension.Authorization.Test.Clients
                 });
 
             // Act
-            await sut.AuthorizeAsync(endpoint, request, default);
+            await sut.CallTokenEndpointAsync(endpoint, request, default);
 
             // Assert
             _tokenRequestBinderMock.Verify(trb => trb.Bind(It.Is<Uri>(u => u.Equals(endpoint)), It.Is<ClientCredentialsRequest>(ccr => ccr.Equals(request))), Times.Once);
@@ -81,7 +81,7 @@ namespace Netension.Authorization.Test.Clients
                 });
 
             // Act
-            var result = await sut.AuthorizeAsync(new Fixture().Create<Uri>(), new Fixture().Create<ClientCredentialsRequest>(), default);
+            var result = await sut.CallTokenEndpointAsync(new Fixture().Create<Uri>(), new Fixture().Create<ClientCredentialsRequest>(), default);
 
             // Assert
             Assert.Equal(response, result);

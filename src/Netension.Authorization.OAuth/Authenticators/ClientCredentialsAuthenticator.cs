@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Netension.Authorization.OAuth.Clients;
 using Netension.Authorization.OAuth.Options;
+using Netension.Authorization.OAuth.Storages;
 using Netension.Authorization.OAuth.ValueObjects;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,24 +12,30 @@ namespace Netension.Authorization.OAuth.Authenticators
     {
         private readonly ClientCredentialsOptions _options;
         private readonly IOAuthClient _client;
+        private readonly ITokenStorage _storage;
         private readonly ILogger<ClientCredentialsAuthenticator> _logger;
 
-        private string _accessToken;
-
-        public ClientCredentialsAuthenticator(ClientCredentialsOptions options, IOAuthClient client, ILogger<ClientCredentialsAuthenticator> logger)
+        public ClientCredentialsAuthenticator(ClientCredentialsOptions options, IOAuthClient client, ITokenStorage storage, ILogger<ClientCredentialsAuthenticator> logger)
         {
             _options = options;
             _client = client;
+            _storage = storage;
             _logger = logger;
         }
 
         public async Task<string> AuthenticateAsync(CancellationToken cancellationToken)
         {
-            var tokens = await _client.AuthorizeAsync(_options.TokenEndpoint, new ClientCredentialsRequest(_options.ClientId, _options.ClientSecret, string.Join(' ', _options.Scopes)), cancellationToken);
+            _logger.LogDebug("Authenticate {client} client", _options.ClientId);
 
-            _accessToken = tokens.AccessToken;
+            var token = await _storage.GetAccessTokenAsync(cancellationToken);
+            if (token is null)
+            {
+                var tokens = await _client.CallTokenEndpointAsync(_options.TokenEndpoint, new ClientCredentialsRequest(_options.ClientId, _options.ClientSecret, string.Join(' ', _options.Scopes)), cancellationToken);
+                await _storage.StoreAccessTokenAsync(tokens.AccessToken, tokens.ExpiresIn, cancellationToken);
+                token = tokens.AccessToken;
+            }
 
-            return _accessToken;
+            return token;
         }
     }
 }

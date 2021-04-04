@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Netension.Authorization.OAuth.Storages
 {
-    public class TokenStorage : ITokenStorage
+    public class DistributedTokenStorage : ITokenStorage
     {
         private readonly string _key;
         private readonly IDistributedCache _cache;
-        private readonly ILogger<TokenStorage> _logger;
+        private readonly ILogger<DistributedTokenStorage> _logger;
 
-        public TokenStorage(string key, IDistributedCache cache, ILogger<TokenStorage> logger)
+        public DistributedTokenStorage(string key, IDistributedCache cache, ILogger<DistributedTokenStorage> logger)
         {
             _key = key;
             _cache = cache;

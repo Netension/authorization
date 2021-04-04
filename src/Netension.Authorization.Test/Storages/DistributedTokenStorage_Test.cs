@@ -13,25 +13,25 @@ using Xunit.Abstractions;
 
 namespace Netension.Authorization.Test.Storages
 {
-    public class TokenStorage_Test
+    public class DistributedTokenStorage_Test
     {
-        private readonly ILogger<TokenStorage> _logger;
+        private readonly ILogger<DistributedTokenStorage> _logger;
         private Mock<IDistributedCache> _distributeCacheMock;
         private string _key;
 
-        public TokenStorage_Test(ITestOutputHelper outputHelper)
+        public DistributedTokenStorage_Test(ITestOutputHelper outputHelper)
         {
             _logger = new LoggerFactory()
                         .AddXUnit(outputHelper)
-                        .CreateLogger<TokenStorage>();
+                        .CreateLogger<DistributedTokenStorage>();
         }
 
-        private TokenStorage CreateSUT()
+        private DistributedTokenStorage CreateSUT()
         {
             _key = new Fixture().Create<string>();
             _distributeCacheMock = new Mock<IDistributedCache>();
 
-            return new TokenStorage(_key, _distributeCacheMock.Object, _logger);
+            return new DistributedTokenStorage(_key, _distributeCacheMock.Object, _logger);
         }
 
         [Fact(DisplayName = "TokenStorage - StoreAccessToken - With expiration")]
