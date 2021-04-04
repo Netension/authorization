@@ -17,6 +17,12 @@ namespace Netension.Authorization.OAuth.NetCore.Sample
 
             services.AddAuthenticatedHttpClient<IBlizzardClient, BlizzardClient>("blizzard");
 
+            services.AddDistributedRedisCache((options) =>
+            {
+                options.Configuration = "mihben.net";
+                options.InstanceName = "oauth-sample";
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Netension.Authorization.OAuth.NetCore.Sample", Version = "v1" });

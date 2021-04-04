@@ -27,14 +27,17 @@ namespace Netension.Authorization.OAuth.Authenticators
         {
             _logger.LogDebug("Authenticate {client} client", _options.ClientId);
 
+            _logger.LogDebug("Looking for access token in token storage");
             var token = await _storage.GetAccessTokenAsync(cancellationToken);
             if (token is null)
             {
+                _logger.LogDebug("Access token not found in token storage");
                 var tokens = await _client.CallTokenEndpointAsync(_options.TokenEndpoint, new ClientCredentialsRequest(_options.ClientId, _options.ClientSecret, string.Join(' ', _options.Scopes)), cancellationToken);
                 await _storage.StoreAccessTokenAsync(tokens.AccessToken, tokens.ExpiresIn, cancellationToken);
                 token = tokens.AccessToken;
             }
 
+            _logger.LogTrace("Access token: {token}", token);
             return token;
         }
     }

@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using Netension.Authorization.OAuth.Storages;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
@@ -22,7 +21,7 @@ namespace Netension.Authorization.Test.Storages
 
         private MemoryTokenStorage CreateSUT()
         {
-            return new MemoryTokenStorage();
+            return new MemoryTokenStorage(_logger);
         }
 
         [Fact(DisplayName = "MemoryTokenStorage - StoreAccessTokenAsync - Store token")]

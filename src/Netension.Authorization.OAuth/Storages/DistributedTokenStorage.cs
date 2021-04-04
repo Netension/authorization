@@ -44,7 +44,7 @@ namespace Netension.Authorization.OAuth.Storages
         private async Task StoreAccessTokenInternalAsync(string token, TimeSpan? expiration, CancellationToken cancellationToken)
         {
             var cacheKey = $"{_key}-access_token";
-            _logger.LogDebug("Store {key} {type}", cacheKey, "access token");
+            _logger.LogDebug("Store {key} acces token", cacheKey);
 
             await _cache.SetAsync(cacheKey, Encoding.UTF8.GetBytes(token), new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = expiration }, cancellationToken);
         }

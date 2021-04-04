@@ -16,8 +16,12 @@ namespace Netension.Authorization.OAuth.NetCore.Sample
             Host.CreateDefaultBuilder(args)
                 .UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration))
                 .UseLightInject()
-                .UseClientCredentialsAuthenticator("keycloak", "Keycloak")
-                .UseClientCredentialsAuthenticator("blizzard", "Blizzard", builder => builder.SendCredentialsInHeader())
+                .UseClientCredentialsAuthenticator("keycloak", "Keycloak", builder => builder.UseDistributedTokenStorage())
+                .UseClientCredentialsAuthenticator("blizzard", "Blizzard", builder =>
+                {
+                    builder.SendCredentialsInHeader();
+                    builder.UseDistributedTokenStorage();
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

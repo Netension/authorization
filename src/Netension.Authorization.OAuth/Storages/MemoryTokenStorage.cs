@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -6,8 +7,14 @@ namespace Netension.Authorization.OAuth.Storages
 {
     public class MemoryTokenStorage : ITokenStorage
     {
+        private readonly ILogger<MemoryTokenStorage> _logger;
         private string _accessToken;
-        private DateTime? _expiredAt; 
+        private DateTime? _expiredAt;
+
+        public MemoryTokenStorage(ILogger<MemoryTokenStorage> logger)
+        {
+            _logger = logger;
+        }
 
         public Task<string> GetAccessTokenAsync(CancellationToken cancellationToken)
         {
@@ -22,6 +29,8 @@ namespace Netension.Authorization.OAuth.Storages
 
         public Task StoreAccessTokenAsync(string token, TimeSpan? expiration, CancellationToken cancellationToken)
         {
+            _logger.LogDebug("Store access token");
+
             _accessToken = token;
             if (expiration.HasValue) _expiredAt = DateTime.UtcNow.Add(expiration.Value);
 
