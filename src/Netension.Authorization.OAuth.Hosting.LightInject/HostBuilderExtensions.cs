@@ -17,6 +17,21 @@ namespace Netension.Authorization.OAuth.Hosting.LightInject
 {
     public static class HostBuilderExtensions
     {
+        public static IHostBuilder UseClientCredentialsAuthenticator(this IHostBuilder hostBuilder, string scheme, string section)
+        {
+            return hostBuilder.UseClientCredentialsAuthenticator(scheme, (options, configuration) => configuration.GetSection(section).Bind(options));
+        }
+
+        public static IHostBuilder UseClientCredentialsAuthenticator(this IHostBuilder hostBuilder, string scheme, string section, Action<ClientCredentialsBuilder> build)
+        {
+            return hostBuilder.UseClientCredentialsAuthenticator(scheme, (options, configuration) => configuration.GetSection(section).Bind(options), build);
+        }
+
+        public static IHostBuilder UseClientCredentialsAuthenticator(this IHostBuilder hostBuilder, string scheme, Action<ClientCredentialsOptions, IConfiguration> configure)
+        {
+            return hostBuilder.UseClientCredentialsAuthenticator(scheme, configure, builder => { });
+        }
+
         public static IHostBuilder UseClientCredentialsAuthenticator(this IHostBuilder hostBuilder, string scheme, Action<ClientCredentialsOptions, IConfiguration> configure, Action<ClientCredentialsBuilder> build)
         {
             hostBuilder.ConfigureServices((context, services) =>
@@ -33,7 +48,11 @@ namespace Netension.Authorization.OAuth.Hosting.LightInject
                 container.RegisterSingleton<IAuthenticator>(factory => new ClientCredentialsAuthenticator(factory.GetInstance<IOptionsSnapshot<ClientCredentialsOptions>>().Get(scheme), factory.GetInstance<IOAuthClient>(scheme), factory.GetInstance<ITokenStorage>(scheme), factory.GetInstance<ILogger<ClientCredentialsAuthenticator>>()), scheme);
             });
 
-            build(new ClientCredentialsBuilder(hostBuilder, scheme));
+            var clientCredentialsBuilder = new ClientCredentialsBuilder(hostBuilder, scheme);
+            clientCredentialsBuilder.SendCredentialsInBody();
+            clientCredentialsBuilder.UseMemoryTokenStorage();
+
+            build(clientCredentialsBuilder);
 
             return hostBuilder;
         }
