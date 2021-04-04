@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Storages\" />
     <Folder Include="Providers\" />
   </ItemGroup>
 

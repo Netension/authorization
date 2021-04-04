@@ -15,7 +15,7 @@ namespace Netension.Authorization.OAuth.NetCore.Sample
         {
             services.AddControllers();
 
-            services.AddAuthorizedHttpClient<IBlizzardClient, BlizzardClient>("blizzard");
+            services.AddAuthenticatedHttpClient<IBlizzardClient, BlizzardClient>("blizzard");
 
             services.AddSwaggerGen(c =>
             {

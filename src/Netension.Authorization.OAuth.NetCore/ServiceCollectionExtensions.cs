@@ -7,7 +7,7 @@ namespace Netension.Authorization.OAuth.NetCore
 {
     public static class ServiceCollectionExtensions
     {
-        public static IHttpClientBuilder AddAuthorizedHttpClient<TClient>(this IServiceCollection services, string scheme)
+        public static IHttpClientBuilder AddAuthenticatedHttpClient<TClient>(this IServiceCollection services, string scheme)
             where TClient : class
         {
             return services.AddHttpClient<TClient>((provider, client) =>
@@ -21,7 +21,7 @@ namespace Netension.Authorization.OAuth.NetCore
             });
         }
 
-        public static IHttpClientBuilder AddAuthorizedHttpClient<TClient, TImplementation>(this IServiceCollection services, string scheme)
+        public static IHttpClientBuilder AddAuthenticatedHttpClient<TClient, TImplementation>(this IServiceCollection services, string scheme)
             where TClient : class
             where TImplementation : class, TClient
         {
