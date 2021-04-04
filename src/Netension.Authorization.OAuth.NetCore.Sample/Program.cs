@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Win32;
 using Netension.Authorization.OAuth.Hosting.LightInject;
 using System;
 

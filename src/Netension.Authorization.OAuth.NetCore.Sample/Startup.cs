@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Netension.Authorization.OAuth.NetCore.Sample.Services;
 
 namespace Netension.Authorization.OAuth.NetCore.Sample
 {
@@ -14,6 +15,8 @@ namespace Netension.Authorization.OAuth.NetCore.Sample
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddAuthorizedHttpClient<IBlizzardClient, BlizzardClient>("blizzard");
 
             services.AddSwaggerGen(c =>
             {
